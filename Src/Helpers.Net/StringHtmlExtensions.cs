@@ -23,7 +23,7 @@ namespace System
                 return html;
             }
 
-            // Count characters and ignore tags
+            // Count the characters and ignore tags
             Int32 textCount = 0;
             Int32 charCount = 0;
             bool ignore = false;
@@ -43,18 +43,18 @@ namespace System
                 {
                     textCount++;
                 }
-                   
+
                 // Reset the ignore boolean
                 if (c == '>')
                 {
                     ignore = false;
                 }
-                    
+
                 // Stop once we hit the limit
                 if (textCount >= maxCharacters)
                 {
                     break;
-                }                 
+                }
             }
 
             // Truncate the html and keep whole words only
@@ -78,11 +78,11 @@ namespace System
                     {
                         tags.Push(tag);
                     }
-                    else if (!string.IsNullOrEmpty(closeTag))
+                    else if (string.IsNullOrEmpty(closeTag) == false)
                     {
                         // Pop the tag to close it.. find the matching opening tag
                         // ignore any unclosed tags
-                        while (tags.Count > 0 && tags.Pop() != closeTag){}
+                        while (tags.Count > 0 && tags.Pop() != closeTag) { }
                     }
                 }
             }
@@ -92,7 +92,7 @@ namespace System
             {
                 trunc.Append(trailingText);
             }
-                
+
             // Pop the rest off the stack to close remainder of tags
             while (tags.Count > 0)
             {
@@ -122,7 +122,6 @@ namespace System
         /// <param name="html">The HTML string to truncate</param>
         /// <param name="delimiter">The delimiter</param>
         /// <param name="comparison">The delimiter comparison type</param>
-        /// <returns></returns>
         public static string TruncateHtmlByDelimiter(this string html, string delimiter, StringComparison comparison = StringComparison.Ordinal)
         {
             var index = html.IndexOf(delimiter, comparison);
@@ -176,7 +175,7 @@ namespace System
         } // End of the TruncateWords method
 
         /// <summary>
-        /// Truncates text and discars any partial words left at the end
+        /// Truncates text and discard any partial words left at the end
         /// </summary>
         public static string TruncateWords(this string text, int maxCharacters, string trailingText)
         {
